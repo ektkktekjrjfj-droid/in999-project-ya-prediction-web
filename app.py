@@ -1,23 +1,48 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from pymongo import MongoClient
+import os
 
-# App setup mein secret key add karein (Sessions ke liye zaroori hai)
-app.secret_key = 'kushal_secret_key' 
+app = Flask(__name__)
+app.secret_key = 'kushal_999_super_secret' # Isse session fast aur secure rahega
+
+# MongoDB Connection
+MONGO_URI = "mongodb+srv://Elevenyts:Elevenyts@cluster0.vuyc1u2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = MongoClient(MONGO_URI)
+db = client['in999_database']
+users_collection = db['users']
+
+@app.route('/')
+def index():
+    if 'user_id' in session:
+        return redirect(url_for('dashboard'))
+    return render_template('register.html')
+
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect(url_for('login_page'))
+    return render_template('dashboard.html')
 
 @app.route('/login')
 def login_page():
     return render_template('login.html')
 
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    if users_collection.find_one({"phone": data['phone']}):
+        return jsonify({"message": "Number already registered!"}), 400
+    users_collection.insert_one(data)
+    return jsonify({"message": "Registration Successful!"}), 201
+
 @app.route('/login_process', methods=['POST'])
 def login_process():
     data = request.json
-    phone = data.get('phone')
-    password = data.get('password')
-    
-    # Database mein check karein
-    user = users_collection.find_one({"phone": phone, "password": password})
-    
+    user = users_collection.find_one({"phone": data['phone'], "password": data['password']})
     if user:
-        session['user_id'] = str(user['_id']) # Session save karein
-        return jsonify({"message": "Success"}), 200
-    else:
-        return jsonify({"message": "Invalid Phone or Password"}), 401
+        session['user_id'] = str(user['_id'])
+        return jsonify({"success": True}), 200
+    return jsonify({"message": "Wrong Phone or Password"}), 401
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
