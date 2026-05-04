@@ -2,55 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - In999</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>In999 - Register</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body style="background-color: #f7f8ff;">
-
-    <div class="register-container">
-        <div class="header">
+<body>
+    <div class="main-box">
+        <div class="top-nav">
             <i class="fas fa-chevron-left"></i>
             <span>Register</span>
         </div>
 
-        <div class="logo-section">
-            <h1 style="color: #ff4d4d;">In999</h1>
-            <p>Register your account</p>
+        <div class="banner">
+            <h1>IN<span>999</span></h1>
+            <p>Fair & Professional Gaming</p>
         </div>
 
-        <form id="regForm" class="reg-form">
-            <div class="input-group">
-                <i class="fas fa-mobile-alt"></i>
-                <input type="text" id="phone" placeholder="Phone Number" required>
+        <div class="form-part">
+            <div class="input-row">
+                <i class="fas fa-phone-alt"></i>
+                <input type="text" id="phone" placeholder="Phone Number">
             </div>
-
-            <div class="input-group">
+            <div class="input-row">
                 <i class="fas fa-lock"></i>
-                <input type="password" id="password" placeholder="Set Password" required>
+                <input type="password" id="password" placeholder="Password">
+            </div>
+            <div class="input-row">
+                <i class="fas fa-gift"></i>
+                <input type="text" id="invite_code" placeholder="Invite Code">
             </div>
 
-            <div class="input-group">
-                <i class="fas fa-user-friends"></i>
-                <input type="text" id="invite_code" placeholder="Invitation Code">
-            </div>
-
-            <div class="terms">
-                <input type="checkbox" checked> I agree to the <span style="color: #ff4d4d;">Privacy Policy</span>
-            </div>
-
-            <button type="submit" class="reg-btn">Register</button>
-        </form>
-
-        <div class="footer-link">
-            Already have an account? <a href="/login" style="color: #ff4d4d;">Log in</a>
+            <button onclick="doRegister()" class="main-btn">Register</button>
+            <p class="login-text">Already have an account? <a href="#">Log in</a></p>
         </div>
     </div>
 
     <script>
-        document.getElementById('regForm').onsubmit = async (e) => {
-            e.preventDefault();
+        async function doRegister() {
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const invite_code = document.getElementById('invite_code').value;
@@ -60,10 +49,8 @@
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({phone, password, invite_code})
             });
-
-            const data = await res.json();
-            alert(data.message);
-            if(res.status === 201) window.location.href = '/login';
+            const result = await res.json();
+            alert(result.message);
         }
     </script>
 </body>
