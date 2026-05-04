@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subway Surfers Test</title>
+    <style>
+        body { margin: 0; background: #222; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; color: white; font-family: sans-serif; }
+        canvas { border: 4px solid #444; background: #87CEEB; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #ui { position: absolute; top: 20px; font-size: 24px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="ui">Score: <span id="score">0</span></div>
+    <canvas id="gameCanvas"></canvas>
 
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 400; canvas.height = 600;
+
+        // Game Variables
+        let score = 0;
+        let gameActive = true;
+        let speed = 5;
+        let player = { lane: 1, y: 500, width: 40, height: 60, color: "#FFD700" };
+        let obstacles = [];
+
+        // Lane positions (Left, Center, Right)
+        const lanes = [80, 200, 320];
+
+        // Controls
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft" && player.lane > 0) player.lane--;
+            if (e.key === "ArrowRight" && player.lane < 2) player.lane++;
+        });
+
+        // Touch for Mobile Testing
+        let touchStartX = 0;
+        window.addEventListener("touchstart", e => touchStartX = e.touches[0].clientX);
+        window.addEventListener("touchend", e => {
+            let diff = e.changedTouches[0].clientX - touchStartX;
+            if (diff > 50 && player.lane < 2) player.lane++;
+            if (diff < -50 && player.lane > 0) player.lane--;
+        });
+
+        function spawnObstacle() {
+            let laneIndex = Math.floor(Math.random() * 3);
+            obstacles.push({ x: lanes[laneIndex] - 20, y: -50, w: 40, h: 40 });
+        }
+
+        function draw() {
+            if (!gameActive) return;
+
+            // Background (Road)
+            ctx.fillStyle = "#87CEEB"; ctx.fillRect(0,0,400,600);
+            ctx.fillStyle = "#555"; ctx.fillRect(50, 0, 300, 600);
+            
+            // Lane Lines
+            ctx.strokeStyle = "#AAA"; ctx.setLineDash([20, 20]);
+            ctx.beginPath(); ctx.moveTo(150, 0); ctx.lineTo(150, 600); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(250, 0); ctx.lineTo(250, 600); ctx.stroke();
+
+            // Player
+            ctx.fillStyle = player.color;
+            let targetX = lanes[player.lane] - (player.width / 2);
+            ctx.fillRect(targetX, player.y, player.width, player.height);
+
+            // Obstacles logic
+            ctx.fillStyle = "#E74C3C";
+            obstacles.forEach((obs, index) => {
+                obs.y += speed;
+                ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+
+                // Check Collision
+                if (obs.y + obs.h > player.y && obs.y < player.y + player.height && (obs.x + 20) === lanes[player.lane]) {
+                    gameActive = false;
+                    alert("GAME OVER! Score: " + score);
+                    location.reload();
+                }
+
+                // Remove off-screen obstacles
+                if (obs.y > 600) {
+                    obstacles.splice(index, 1);
+                    score += 10;
+                    document.getElementById("score").innerText = score;
+                    if (score % 100 === 0) speed += 0.5; // Speed increases
+                }
+            });
+
+            if (Math.random() < 0.03) spawnObstacle();
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
