@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
 import asyncio
+import logging
 from io import BytesIO
 from datetime import datetime
 from pyrogram import Client, filters, types
 from pymongo import MongoClient
 from PIL import Image, ImageDraw, ImageFont
+
+# Logging setup taaki errors saaf dikhein
+logging.basicConfig(level=logging.INFO)
 
 # --- CONFIG ---
 API_ID = 21552435
@@ -13,12 +17,13 @@ API_HASH = "5b108bd2fdd31c0c34bc65f24a5216a0"
 BOT_TOKEN = "8056440527:AAHtaVS-1kSRqu0d0YZ9-ugTU-V6nZiGsXI"
 MONGO_URL = "mongodb+srv://Elevenyts:Elevenyts@cluster0.vuyc1u2.mongodb.net/?retryWrites=true&w=majority"
 
+# Client & DB Initialization
 app = Client("protection_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 db_client = MongoClient(MONGO_URL)
 db = db_client["ProtectionBotDB"]
 reports_col = db["user_reports"]
 
-# --- UPDATED TEXT (Fixed for Syntax) ---
+# --- EXACT TEXT FORMAT ---
 START_TEXT = (
     "┏━━━━━ 👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 👋 ━━━━━┓\n\n"
     "Hello There! I'm the Copyright Protection Bot – your channel's guardian.\n\n"
@@ -45,8 +50,8 @@ async def create_welcome_image(user_id, user_photo_id):
             draw_mask.ellipse((0, 0, 160, 160), fill=255)
             bg.paste(user_img, (60, 120), mask)
             os.remove(path)
-        except:
-            pass
+        except Exception as e:
+            logging.error(f"Image Error: {e}")
 
     try:
         font = ImageFont.load_default()
@@ -75,17 +80,22 @@ async def anti_report_shield(client, message):
             "time": datetime.now()
         })
         await message.delete()
-    except:
-        pass
+    except Exception as e:
+        logging.error(f"DB/Delete Error: {e}")
 
-# --- RENDER DEPLOYMENT FIX ---
-async def main():
-    async with app:
-        print("✅ BOT STARTED SUCCESSFULLY")
+# --- REFRESHED STARTUP LOGIC ---
+async def start_bot():
+    try:
+        await app.start()
+        logging.info("✅ BOT IS LIVE AND SECURE")
         await asyncio.Event().wait()
+    except Exception as e:
+        logging.error(f"Startup Error: {e}")
+    finally:
+        await app.stop()
 
 if __name__ == "__main__":
     try:
-        asyncio.run(main())
-    except (KeyboardInterrupt, SystemExit, RuntimeError):
+        asyncio.run(start_bot())
+    except (KeyboardInterrupt, SystemExit):
         pass
