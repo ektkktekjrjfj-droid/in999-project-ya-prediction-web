@@ -1,5 +1,6 @@
-flask
+pyrogram
+tgcrypto
+motor
 pymongo
+flask
 dnspython
-gunicorn
-python-dotenv
