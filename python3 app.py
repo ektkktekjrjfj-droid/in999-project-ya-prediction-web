@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import asyncio
 from io import BytesIO
@@ -6,41 +7,34 @@ from pyrogram import Client, filters, types
 from pymongo import MongoClient
 from PIL import Image, ImageDraw, ImageFont
 
-# --- CONFIGURATION ---
-# Bhai ye details tumhare pehle wale code se liye hain
+# --- CONFIG ---
 API_ID = 21552435
 API_HASH = "5b108bd2fdd31c0c34bc65f24a5216a0"
 BOT_TOKEN = "8056440527:AAHtaVS-1kSRqu0d0YZ9-ugTU-V6nZiGsXI"
 MONGO_URL = "mongodb+srv://Elevenyts:Elevenyts@cluster0.vuyc1u2.mongodb.net/?retryWrites=true&w=majority"
 
-# Client Initialization
 app = Client("protection_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 db_client = MongoClient(MONGO_URL)
 db = db_client["ProtectionBotDB"]
 reports_col = db["user_reports"]
 
-# --- EXACT TEXT FORMAT (Jo tumne manga) ---
-START_TEXT = """
-┏━━━━━ 👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 👋 ━━━━━┓
-
-Hello There! I'm the Copyright Protection Bot – your channel's guardian.
-
-✨ Features:
-  ┣━ Protect from copyright strikes
-  ┣━ Prevent fake reports
-  ┣━ Monitor suspicious activity
-  ┗━ Secure your content 24/7
-
-🔰 Tap /start to use me and save your channel from being banned! 🚀
-
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-"""
+# --- UPDATED TEXT (Fixed for Syntax) ---
+START_TEXT = (
+    "┏━━━━━ 👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 👋 ━━━━━┓\n\n"
+    "Hello There! I'm the Copyright Protection Bot – your channel's guardian.\n\n"
+    "✨ Features:\n"
+    "  ┣━ Protect from copyright strikes\n"
+    "  ┣━ Prevent fake reports\n"
+    "  ┣━ Monitor suspicious activity\n"
+    "  ┗━ Secure your content 24/7\n\n"
+    "🔰 Tap /start to use me and save your channel from being banned! 🚀\n\n"
+    "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
+)
 
 async def create_welcome_image(user_id, user_photo_id):
-    # Ek basic white background image generator
     bg = Image.new('RGB', (800, 400), color=(255, 255, 255))
     draw = ImageDraw.Draw(bg)
-    draw.rectangle([0, 0, 30, 400], fill=(76, 175, 80)) # Green Bar
+    draw.rectangle([0, 0, 30, 400], fill=(76, 175, 80))
 
     if user_photo_id:
         try:
@@ -51,13 +45,13 @@ async def create_welcome_image(user_id, user_photo_id):
             draw_mask.ellipse((0, 0, 160, 160), fill=255)
             bg.paste(user_img, (60, 120), mask)
             os.remove(path)
-        except Exception:
+        except:
             pass
 
     try:
         font = ImageFont.load_default()
         draw.text((250, 160), "🛡️ SHIELD ACTIVE ✅", fill=(0, 0, 0), font=font)
-    except Exception:
+    except:
         draw.text((250, 160), "SHIELD ACTIVE ✅", fill=(0, 0, 0))
 
     img_io = BytesIO()
@@ -66,36 +60,32 @@ async def create_welcome_image(user_id, user_photo_id):
     return img_io
 
 # --- HANDLERS ---
-
 @app.on_message(filters.command("start") & filters.private)
 async def start_handler(client, message):
     user_photo = message.from_user.photo.big_file_id if message.from_user.photo else None
     photo = await create_welcome_image(message.from_user.id, user_photo)
     await message.reply_photo(photo=photo, caption=START_TEXT)
 
-# Security Shield: Groups mein "report" keywords ko rokna
 @app.on_message(filters.group & (filters.regex("(?i)report") | filters.regex("(?i)copyright")))
 async def anti_report_shield(client, message):
     try:
-        # MongoDB mein entry save karna
         reports_col.insert_one({
             "user_id": message.from_user.id,
             "chat_id": message.chat.id,
             "time": datetime.now()
         })
-        await message.delete() # Message turant mita dena
-    except Exception:
+        await message.delete()
+    except:
         pass
 
-# --- RENDER DEPLOYMENT STARTUP (Python 3.14 Fix) ---
+# --- RENDER DEPLOYMENT FIX ---
 async def main():
     async with app:
-        print("✅ SYSTEM READY: PROTECTION BOT IS LIVE")
+        print("✅ BOT STARTED SUCCESSFULLY")
         await asyncio.Event().wait()
 
 if __name__ == "__main__":
     try:
-        # Python 3.14 ke liye standard asyncio.run use kar rahe hain
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit, RuntimeError):
         pass
