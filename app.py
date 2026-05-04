@@ -1,37 +1,23 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 
-app = Flask(__name__)
-app.secret_key = 'in999_secret_key'
+# App setup mein secret key add karein (Sessions ke liye zaroori hai)
+app.secret_key = 'kushal_secret_key' 
 
-# Yeh route check karega ki user logged in hai ya nahi
-@app.route('/')
-def home():
-    if 'user' in session:
-        return redirect(url_for('dashboard'))
+@app.route('/login')
+def login_page():
     return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
-def login():
-    phone = request.form.get('phone')
-    password = request.form.get('password')
+@app.route('/login_process', methods=['POST'])
+def login_process():
+    data = request.json
+    phone = data.get('phone')
+    password = data.get('password')
     
-    # Simple Logic: Aap yahan apna koi bhi password rakh sakte hain
-    if len(phone) >= 10 and password == "123456": 
-        session['user'] = phone
-        return redirect(url_for('dashboard'))
+    # Database mein check karein
+    user = users_collection.find_one({"phone": phone, "password": password})
+    
+    if user:
+        session['user_id'] = str(user['_id']) # Session save karein
+        return jsonify({"message": "Success"}), 200
     else:
-        return "Invalid Credentials! Please try again."
-
-@app.route('/dashboard')
-def dashboard():
-    if 'user' not in session:
-        return redirect(url_for('home'))
-    return render_template('dashboard.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    return redirect(url_for('home'))
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        return jsonify({"message": "Invalid Phone or Password"}), 401
