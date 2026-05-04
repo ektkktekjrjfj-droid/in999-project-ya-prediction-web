@@ -3,76 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Register - In999</title>
+    <title>In999 Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --main-yellow: #ffc921; --bg-gray: #f7f8ff; }
-        body { margin: 0; font-family: 'Arial', sans-serif; background: var(--bg-gray); }
-        .header { background: var(--main-yellow); padding: 15px; display: flex; align-items: center; gap: 15px; color: #fff; font-weight: bold; }
-        .header img { height: 30px; }
-        .top-tab { background: #fff; display: flex; justify-content: center; padding: 15px; border-bottom: 2px solid var(--main-yellow); color: var(--main-yellow); font-weight: bold; }
-        .form-container { padding: 20px; }
-        .label { display: flex; align-items: center; gap: 8px; margin: 15px 0 8px; color: #666; font-size: 14px; }
-        .label i { color: var(--main-yellow); }
-        .input-group { display: flex; gap: 10px; }
-        .country-code { background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
-        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #eee; outline: none; background: #fff; }
-        .reg-btn { width: 100%; padding: 15px; background: var(--main-yellow); color: #fff; border: none; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 30px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .login-btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--main-yellow); color: var(--main-yellow); border-radius: 30px; margin-top: 15px; cursor: pointer; }
-        .policy { font-size: 12px; color: #999; margin-top: 15px; display: flex; align-items: center; gap: 8px; }
+        body { margin: 0; background: #f7f8ff; font-family: sans-serif; padding-bottom: 80px; }
+        .nav-top { background: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+        .nav-top img { height: 28px; }
+        .nav-top i { color: #ffc921; font-size: 22px; }
+
+        .banner-box { width: 94%; margin: 12px auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .banner-box img { width: 100%; display: block; }
+
+        .notice { background: white; margin: 10px; padding: 10px; border-radius: 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; }
+        .notice-btn { background: #ffc921; color: white; border: none; padding: 5px 15px; border-radius: 15px; margin-left: auto; }
+
+        .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; }
+        .cat-card { background: white; padding: 12px; border-radius: 10px; text-align: center; color: #333; font-size: 13px; }
+        .cat-card i { display: block; font-size: 24px; color: #2b3270; margin-bottom: 5px; }
+        .cat-card.active { background: #ffc921; color: white; }
+        .cat-card.active i { color: white; }
+
+        .game-section { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .game-item { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .game-item img { width: 100%; height: 130px; object-fit: cover; }
+        .rtp-info { padding: 5px 10px; background: #ffc921; font-size: 11px; font-weight: bold; }
+
+        .footer-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; }
+        .footer-nav a { text-decoration: none; color: #999; text-align: center; font-size: 11px; }
+        .footer-nav a.active { color: #ffc921; }
+        .footer-nav i { display: block; font-size: 22px; margin-bottom: 3px; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <i class="fas fa-chevron-left"></i>
+    <div class="nav-top">
         <img src="https://www.in999dd.com/assets/png/logo-598d1a60.png" alt="Logo">
-        <span style="margin-left: auto;">EN</span>
+        <div style="display:flex; gap:15px;"><i class="fas fa-download"></i><i class="fas fa-headset"></i></div>
     </div>
 
-    <div class="top-tab">
-        <i class="fas fa-mobile-alt"></i> &nbsp; Register your phone
+    <div class="banner-box">
+        <img src="https://ossimg.in999dd.com/In999/banner/Banner_20240315170322j7sq.png">
     </div>
 
-    <div class="form-container">
-        <div class="label"><i class="fas fa-phone"></i> Phone number</div>
-        <div class="input-group">
-            <div class="country-code">+91 <i class="fas fa-chevron-down"></i></div>
-            <input type="text" id="phone" placeholder="Please enter the phone number">
+    <div class="notice">
+        <i class="fas fa-volume-up" style="color:#ffc921"></i>
+        <span>Protect yourself from Scams!! Deposits are...</span>
+        <button class="notice-btn">Detail</button>
+    </div>
+
+    <div class="cat-grid">
+        <div class="cat-card active"><i class="fas fa-th-large"></i>All</div>
+        <div class="cat-card"><i class="fas fa-dice"></i>Lottery</div>
+        <div class="cat-card"><i class="fas fa-star"></i>Original</div>
+        <div class="cat-card"><i class="fas fa-gamepad"></i>Slots</div>
+        <div class="cat-card"><i class="fas fa-trophy"></i>Sports</div>
+        <div class="cat-card"><i class="fas fa-video"></i>Casino</div>
+    </div>
+
+    <div class="game-section">
+        <div class="game-item">
+            <img src="https://ossimg.in999dd.com/In999/gameicon/TB_Common/aviator.png">
+            <div class="rtp-info">RTP 96.59%</div>
         </div>
-
-        <div class="label"><i class="fas fa-lock"></i> Set password</div>
-        <input type="password" id="password" placeholder="Set password">
-
-        <div class="label"><i class="fas fa-lock"></i> Confirm password</div>
-        <input type="password" id="confirm_password" placeholder="Confirm password">
-
-        <div class="label"><i class="fas fa-user-tag"></i> Invite code</div>
-        <input type="text" id="invite_code" value="114876534174">
-
-        <div class="policy">
-            <input type="checkbox" checked> I have read and agree <span style="color:red">[Privacy Agreement]</span>
+        <div class="game-item">
+            <img src="https://ossimg.in999dd.com/In999/gameicon/TB_Common/cricket.png">
+            <div class="rtp-info">RTP 97.51%</div>
         </div>
-
-        <button class="reg-btn" onclick="register()">Register</button>
-        <button class="login-btn">I have an account <span style="font-weight:bold">Login</span></button>
     </div>
 
-    <script>
-        async function register() {
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-            const invite_code = document.getElementById('invite_code').value;
-
-            if(!phone || !password) return alert("Please fill details");
-
-            const res = await fetch('/register', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({phone, password, invite_code})
-            });
-            const data = await res.json();
-            alert(data.message);
-        }
-    </script>
+    <div class="footer-nav">
+        <a href="#" class="active"><i class="fas fa-home"></i>Home</a>
+        <a href="#"><i class="fas fa-gift"></i>Activity</a>
+        <a href="#" style="transform: scale(1.3); margin-top: -15px; color:#ffc921;"><i class="fas fa-plus-circle"></i></a>
+        <a href="#"><i class="fas fa-bullhorn"></i>Promotion</a>
+        <a href="#"><i class="fas fa-user-circle"></i>Account</a>
+    </div>
 </body>
 </html>
