@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
-app.secret_key = 'kushal_in999_key'
+app.secret_key = 'kushal_999_super_secret' # Isse session fast aur secure rahega
 
 # MongoDB Connection
 MONGO_URI = "mongodb+srv://Elevenyts:Elevenyts@cluster0.vuyc1u2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -27,22 +27,22 @@ def dashboard():
 def login_page():
     return render_template('login.html')
 
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    if users_collection.find_one({"phone": data['phone']}):
+        return jsonify({"message": "Number already registered!"}), 400
+    users_collection.insert_one(data)
+    return jsonify({"message": "Registration Successful!"}), 201
+
 @app.route('/login_process', methods=['POST'])
 def login_process():
     data = request.json
     user = users_collection.find_one({"phone": data['phone'], "password": data['password']})
     if user:
         session['user_id'] = str(user['_id'])
-        return jsonify({"message": "Success"}), 200
-    return jsonify({"message": "Invalid Credentials"}), 401
-
-@app.route('/register', methods=['POST'])
-def register():
-    data = request.json
-    if users_collection.find_one({"phone": data['phone']}):
-        return jsonify({"message": "User exists"}), 400
-    users_collection.insert_one(data)
-    return jsonify({"message": "Registration Successful!"}), 201
+        return jsonify({"success": True}), 200
+    return jsonify({"message": "Wrong Phone or Password"}), 401
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
