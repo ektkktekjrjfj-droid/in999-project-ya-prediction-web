@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - In999</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #f7f8ff;">
 
+    <div class="register-container">
+        <div class="header">
+            <i class="fas fa-chevron-left"></i>
+            <span>Register</span>
+        </div>
+
+        <div class="logo-section">
+            <h1 style="color: #ff4d4d;">In999</h1>
+            <p>Register your account</p>
+        </div>
+
+        <form id="regForm" class="reg-form">
+            <div class="input-group">
+                <i class="fas fa-mobile-alt"></i>
+                <input type="text" id="phone" placeholder="Phone Number" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Set Password" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-user-friends"></i>
+                <input type="text" id="invite_code" placeholder="Invitation Code">
+            </div>
+
+            <div class="terms">
+                <input type="checkbox" checked> I agree to the <span style="color: #ff4d4d;">Privacy Policy</span>
+            </div>
+
+            <button type="submit" class="reg-btn">Register</button>
+        </form>
+
+        <div class="footer-link">
+            Already have an account? <a href="/login" style="color: #ff4d4d;">Log in</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('regForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const invite_code = document.getElementById('invite_code').value;
+
+            const res = await fetch('/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({phone, password, invite_code})
+            });
+
+            const data = await res.json();
+            alert(data.message);
+            if(res.status === 201) window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>
