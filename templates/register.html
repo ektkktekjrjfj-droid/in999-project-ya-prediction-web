@@ -3,148 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>IN999 - Official</title>
+    <title>IN999 Professional Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root { --primary-yellow: #ffc921; --bg-blue: #f7f8ff; --dark-blue: #2b3270; }
-        body { margin: 0; background: var(--bg-blue); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-bottom: 90px; }
-        
-        /* Header */
-        .header { background: #fff; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .header img { height: 26px; }
-        .header-icons { display: flex; gap: 15px; color: var(--primary-yellow); font-size: 22px; }
-
-        /* Banner Slider */
-        .swiper { width: 94%; margin: 12px auto; height: 170px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Notice Bar */
-        .notice-bar { background: #fff; margin: 10px; padding: 10px 15px; border-radius: 25px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #555; }
-        .notice-btn { background: var(--primary-yellow); color: white; border: none; padding: 5px 15px; border-radius: 15px; font-weight: bold; margin-left: auto; }
-
-        /* Functional Tabs */
-        .tab-nav { display: flex; justify-content: space-around; background: #fff; margin: 10px; padding: 12px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .tab-btn { text-align: center; font-size: 11px; color: #888; font-weight: 600; cursor: pointer; transition: 0.3s; border-bottom: 2px solid transparent; }
-        .tab-btn i { display: block; font-size: 22px; color: var(--dark-blue); margin-bottom: 4px; }
-        .tab-btn.active { color: var(--primary-yellow); border-bottom: 2px solid var(--primary-yellow); }
-        .tab-btn.active i { color: var(--primary-yellow); }
-
-        /* Game Grids */
-        .tab-content { display: none; padding: 10px; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .tab-content.active { display: grid; }
-        .game-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: relative; }
-        .game-card img { width: 100%; height: 110px; object-fit: cover; }
-        .rtp-tag { background: var(--primary-yellow); font-size: 10px; font-weight: bold; padding: 4px; text-align: center; }
-
-        /* Winning Information Section */
-        .section-title { padding: 15px; font-weight: bold; display: flex; align-items: center; gap: 8px; color: #333; }
-        .winning-box { background: #fff; margin: 0 10px; border-radius: 15px; padding: 10px; height: 150px; overflow: hidden; position: relative; }
-        .winning-scroll { position: absolute; width: 100%; animation: scrollUp 10s linear infinite; }
-        .winning-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f9f9f9; }
-        .winning-item img { width: 35px; height: 35px; border-radius: 50%; }
-        .winning-text { font-size: 12px; flex: 1; }
-        .winning-amount { color: #ffc921; font-weight: bold; font-size: 13px; margin-right: 15px; }
-
-        @keyframes scrollUp { 
-            0% { top: 0; } 
-            100% { top: -200%; } 
+        :root {
+            --primary-yellow: #ffc921;
+            --dark-blue: #2b3270;
+            --light-bg: #f7f8ff;
+            --white: #ffffff;
+            --text-gray: #777;
         }
 
-        /* Floating Buttons */
-        .add-desktop { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); background: var(--primary-yellow); color: white; padding: 10px 30px; border-radius: 30px; font-weight: bold; font-size: 13px; z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding-bottom: 100px; /* Space for footer */
+        }
 
-        /* Bottom Navbar */
-        .footer { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
-        .footer-item { text-decoration: none; color: #999; font-size: 11px; text-align: center; }
-        .footer-item.active { color: var(--primary-yellow); }
-        .footer-item i { display: block; font-size: 24px; margin-bottom: 3px; }
+        /* --- Header --- */
+        .header {
+            background-color: var(--white);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-logo { height: 28px; }
+        .header-icons { display: flex; gap: 20px; color: var(--primary-yellow); font-size: 22px; }
+
+        /* --- Banner Area --- */
+        .swiper { width: 94%; margin: 15px auto; height: 170px; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .banner-slide { background: var(--dark-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+
+        /* --- Notice Bar --- */
+        .notice { background: var(--white); margin: 10px; padding: 12px 15px; border-radius: 25px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #555; }
+
+        /* --- Categories (Professional) --- */
+        .cat-nav { display: flex; justify-content: space-between; background: var(--white); margin: 10px; padding: 15px 20px; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .cat-item { text-align: center; cursor: pointer; color: var(--text-gray); transition: 0.3s; }
+        .cat-item i { display: block; font-size: 24px; color: var(--dark-blue); margin-bottom: 5px; }
+        .cat-item.active { color: var(--primary-yellow); }
+        .cat-item.active i { color: var(--primary-yellow); }
+
+        /* --- Game Grid --- */
+        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 10px; }
+        .game-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .game-img-placeholder { height: 100px; background: #eef1f9; display: flex; align-items: center; justify-content: center; color: #b0b0b0; font-weight: bold; }
+        .rtp-badge { background: var(--primary-yellow); font-size: 10px; font-weight: 700; padding: 4px; text-align: center; }
+
+        /* --- Winning Section (Detailed) --- */
+        .winning-container { background: var(--white); margin: 15px 10px; border-radius: 15px; padding: 15px; }
+        .win-title { font-weight: bold; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .win-box { height: 160px; overflow: hidden; position: relative; }
+        #win-list { position: absolute; width: 100%; transition: top 0.6s ease-in-out; }
+        .win-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f9f9f9; }
+        .win-avatar { width: 35px; height: 35px; border-radius: 50%; background: #ddd; }
+        .win-text { flex: 1; font-size: 13px; }
+        .win-amt { color: var(--primary-yellow); font-weight: bold; }
+
+        /* --- Floating Footer --- */
+        .footer { position: fixed; bottom: 0; width: 100%; background: var(--white); display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; z-index: 2000; }
+        .nav-link { text-decoration: none; color: #999; text-align: center; font-size: 11px; }
+        .nav-link.active { color: var(--primary-yellow); }
+        .nav-link i { display: block; font-size: 24px; margin-bottom: 3px; }
+        .center-circle { width: 60px; height: 60px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: absolute; top: -30px; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <img src="https://www.in999dd.com/assets/png/logo-598d1a60.png">
-        <div class="header-icons"><i class="fas fa-download"></i><i class="fas fa-headset"></i></div>
-    </div>
+    <header class="header">
+        <img src="https://www.in999dd.com/assets/png/logo-598d1a60.png" class="header-logo">
+        <div class="header-icons"><i class="fas fa-download"></i> <i class="fas fa-headset"></i></div>
+    </header>
 
-    <!-- Banner Slider -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://ossimg.in999dd.com/In999/banner/Banner_20240315170322j7sq.png"></div>
-            <div class="swiper-slide"><img src="https://i.ibb.co/hZ7m9m8/banner.png"></div>
+            <div class="swiper-slide banner-slide">Banner 1</div>
+            <div class="swiper-slide banner-slide">Banner 2</div>
         </div>
     </div>
 
-    <div class="notice-bar">
-        <i class="fas fa-volume-up" style="color:var(--primary-yellow)"></i>
-        <marquee scrollamount="4">Please note that live chat is no longer available. Kindly use our official link...</marquee>
-        <button class="notice-btn">Detail</button>
+    <div class="notice">
+        <i class="fas fa-bullhorn" style="color:var(--primary-yellow)"></i>
+        <marquee>Welcome to IN999! Join the VIP club for daily rewards.</marquee>
     </div>
 
-    <!-- Navigation Tabs -->
-    <div class="tab-nav">
-        <div class="tab-btn active" onclick="showCategory('all', this)"><i class="fas fa-th-large"></i>All</div>
-        <div class="tab-btn" onclick="showCategory('lottery', this)"><i class="fas fa-dice"></i>Lottery</div>
-        <div class="tab-btn" onclick="showCategory('slots', this)"><i class="fas fa-gamepad"></i>Slots</div>
-        <div class="tab-btn" onclick="showCategory('casino', this)"><i class="fas fa-tv"></i>Casino</div>
-    </div>
+    <nav class="cat-nav">
+        <div class="cat-item active"><i class="fas fa-th-large"></i>All</div>
+        <div class="cat-item"><i class="fas fa-dice"></i>Lottery</div>
+        <div class="cat-item"><i class="fas fa-gamepad"></i>Slots</div>
+        <div class="cat-item"><i class="fas fa-tv"></i>Casino</div>
+    </nav>
 
-    <!-- Tab Contents -->
-    <div id="all" class="tab-content active">
-        <div class="game-card"><img src="https://ossimg.in999dd.com/In999/gameicon/TB_Common/aviator.png"><div class="rtp-tag">RTP 96.59%</div></div>
-        <div class="game-card"><img src="https://ossimg.in999dd.com/In999/gameicon/TB_Common/cricket.png"><div class="rtp-tag">RTP 97.51%</div></div>
-        <div class="game-card"><img src="https://ossimg.in999dd.com/In999/gameicon/TB_Common/vortex.png"><div class="rtp-tag">RTP 95.20%</div></div>
-    </div>
+    <section class="game-grid">
+        <div class="game-card"><div class="game-img-placeholder">Aviator</div><div class="rtp-badge">RTP 96.59%</div></div>
+        <div class="game-card"><div class="game-img-placeholder">Wingo</div><div class="rtp-badge">RTP 98.10%</div></div>
+        <div class="game-card"><div class="game-img-placeholder">Cricket</div><div class="rtp-badge">RTP 97.51%</div></div>
+    </section>
 
-    <div id="lottery" class="tab-content">
-        <div class="game-card"><img src="https://ossimg.in999dd.com/In999/gameicon/TB_Common/wingo.png"><div class="rtp-tag">RTP 98.20%</div></div>
-    </div>
-
-    <!-- Winning Information (The Scrollable Part) -->
-    <div class="section-title"><i class="fas fa-trophy" style="color:#ffc921"></i> Winning Information</div>
-    <div class="winning-box">
-        <div class="winning-scroll">
-            <div class="winning-item">
-                <img src="https://i.pravatar.cc/100?u=1">
-                <div class="winning-text">Mem***CZA<br><small style="color:#999">5D Lottery</small></div>
-                <div class="winning-amount">₹196.00</div>
-            </div>
-            <div class="winning-item">
-                <img src="https://i.pravatar.cc/100?u=2">
-                <div class="winning-text">Mem***RPD<br><small style="color:#999">Wingo</small></div>
-                <div class="winning-amount">₹17.64</div>
-            </div>
-            <div class="winning-item">
-                <img src="https://i.pravatar.cc/100?u=3">
-                <div class="winning-text">Mem***OEC<br><small style="color:#999">Wingo</small></div>
-                <div class="winning-amount">₹39.20</div>
+    <div class="winning-container">
+        <div class="win-title"><i class="fas fa-trophy" style="color:var(--primary-yellow)"></i> Winning Information</div>
+        <div class="win-box">
+            <div id="win-list">
+                <div class="win-item"><div class="win-avatar"></div><div class="win-text">Mem***A22<br><small>Wingo</small></div><div class="win-amt">₹499.00</div></div>
+                <div class="win-item"><div class="win-avatar"></div><div class="win-text">Mem***B90<br><small>Aviator</small></div><div class="win-amt">₹1,200.00</div></div>
+                <div class="win-item"><div class="win-avatar"></div><div class="win-text">Mem***C11<br><small>5D Lottery</small></div><div class="win-amt">₹88.00</div></div>
             </div>
         </div>
     </div>
 
-    <div class="add-desktop">Add to Desktop</div>
-
-    <div class="footer">
-        <a href="#" class="footer-item active"><i class="fas fa-home"></i>Home</a>
-        <a href="#" class="footer-item"><i class="fas fa-gift"></i>Activity</a>
-        <a href="#" style="transform:translateY(-15px)"><i class="fas fa-plus-circle" style="font-size:48px; color:var(--primary-yellow); background:#fff; border-radius:50%"></i></a>
-        <a href="#" class="footer-item"><i class="fas fa-bullhorn"></i>Promotion</a>
-        <a href="#" class="footer-item"><i class="fas fa-user-circle"></i>Account</a>
-    </div>
+    <footer class="footer">
+        <a href="#" class="nav-link active"><i class="fas fa-home"></i>Home</a>
+        <a href="#" class="nav-link"><i class="fas fa-gift"></i>Activity</a>
+        <div style="width:60px; position:relative;"><div class="center-circle"><i class="fas fa-plus-circle" style="font-size:45px; color:var(--primary-yellow)"></i></div></div>
+        <a href="#" class="nav-link"><i class="fas fa-bullhorn"></i>Promotion</a>
+        <a href="#" class="nav-link"><i class="fas fa-user-circle"></i>Account</a>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Banner Logic
         var swiper = new Swiper(".mySwiper", { loop: true, autoplay: { delay: 2500 } });
-
-        // Category Switching Logic
-        function showCategory(cat, btn) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(cat).classList.add('active');
-            btn.classList.add('active');
-        }
+        
+        // Winning List Scroll Logic
+        let list = document.getElementById('win-list');
+        let pos = 0;
+        setInterval(() => {
+            pos -= 60;
+            if (pos < -120) pos = 0;
+            list.style.top = pos + 'px';
+        }, 3000);
     </script>
 </body>
-</html>
+    </html>
