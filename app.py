@@ -1,140 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>IN999 Official Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --main-yellow: #ffc921; --dark-blue: #2b3270; --light-gray: #f7f8ff; }
-        body { margin: 0; background: var(--light-gray); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-bottom: 80px; overflow-x: hidden; }
-        
-        /* Header */
-        .header { background: #fff; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-img { height: 28px; }
-        .header-right { display: flex; gap: 15px; color: var(--main-yellow); font-size: 20px; }
-
-        /* Banner Slider */
-        .slider-container { width: 94%; margin: 12px auto; border-radius: 12px; overflow: hidden; height: 160px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative; }
-        .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease; }
-        .slide { width: 100%; background: var(--dark-blue); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold; }
-
-        /* Notice Bar */
-        .notice { background: #fff; margin: 10px; padding: 8px 15px; border-radius: 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; white-space: nowrap; overflow: hidden; }
-
-        /* Categories */
-        .categories { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; margin: 10px; padding: 15px 5px; border-radius: 15px; gap: 5px; }
-        .cat-item { text-align: center; font-size: 11px; color: #666; font-weight: 600; cursor: pointer; }
-        .cat-item i { display: block; font-size: 24px; color: var(--dark-blue); margin-bottom: 5px; }
-        .cat-item.active { color: var(--main-yellow); }
-        .cat-item.active i { color: var(--main-yellow); }
-
-        /* Section Headings */
-        .section-title { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 15px; }
-        .section-title i { color: red; margin-right: 5px; }
-
-        /* Game Grid */
-        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 10px; }
-        .game-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .game-img { height: 100px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #888; }
-        .rtp-strip { background: var(--main-yellow); font-size: 9px; font-weight: 800; text-align: center; padding: 4px 0; }
-
-        /* Live Winning Ticker */
-        .winning-box { background: #fff; margin: 15px 10px; border-radius: 15px; padding: 10px; height: 180px; overflow: hidden; position: relative; }
-        .ticker-list { position: absolute; width: 90%; transition: top 0.6s ease-in-out; }
-        .ticker-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
-        .user-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; }
-        .avatar { width: 35px; height: 35px; background: #ddd; border-radius: 50%; }
-        .win-amt { color: var(--main-yellow); font-weight: bold; }
-
-        /* Earnings Chart */
-        .earnings-list { background: #fff; margin: 10px; border-radius: 15px; padding: 10px; }
-        .rank-row { display: flex; justify-content: space-between; padding: 12px 5px; border-bottom: 1px solid #eee; font-size: 13px; font-weight: 600; }
-
-        /* Floating Nav */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 2000; }
-        .nav-link { text-align: center; color: #999; font-size: 11px; text-decoration: none; }
-        .nav-link.active { color: var(--main-yellow); }
-        .nav-link i { display: block; font-size: 24px; margin-bottom: 3px; }
-        .fab-btn { background: #fff; border-radius: 50%; width: 65px; height: 65px; position: absolute; top: -35px; display: flex; align-items: center; justify-content: center; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <div style="font-weight: 900; font-size: 22px; color: var(--dark-blue);">IN999</div>
-        <div class="header-right"><i class="fas fa-download"></i><i class="fas fa-headset"></i></div>
-    </div>
-
-    <div class="slider-container">
-        <div class="slides" id="slider">
-            <div class="slide" style="background: #2b3270;">BIG WIN DEPOSIT</div>
-            <div class="slide" style="background: #4a54a0;">INVITE FRIENDS</div>
-            <div class="slide" style="background: #1a204d;">DAILY BONUS</div>
+<form action="/login" method="POST" class="form-box">
+    <div class="input-group">
+        <div style="font-weight:bold; margin-bottom:10px;">Phone number</div>
+        <div class="input-wrapper">
+            <span>+91</span>
+            <input type="text" name="phone" id="phone" placeholder="Please enter the phone number" required>
         </div>
     </div>
-
-    <div class="notice">
-        <i class="fas fa-volume-up" style="color:var(--main-yellow)"></i>
-        <marquee>Welcome to IN999! Experience the best games and instant withdrawals.</marquee>
-    </div>
-
-    <div class="categories">
-        <div class="cat-item active"><i class="fas fa-th-large"></i>All</div>
-        <div class="cat-item"><i class="fas fa-dice"></i>Lottery</div>
-        <div class="cat-item"><i class="fas fa-gamepad"></i>Slots</div>
-        <div class="cat-item"><i class="fas fa-tv"></i>Casino</div>
-    </div>
-
-    <div class="section-title"><span><i class="fas fa-fire"></i> Popular Games</span> <span style="color:#999; font-size:12px;">More ></span></div>
-    <div class="game-grid">
-        <div class="game-card"><div class="game-img">Aviator</div><div class="rtp-strip">RTP 96.59%</div></div>
-        <div class="game-card"><div class="game-img">Wingo</div><div class="rtp-strip">RTP 98.10%</div></div>
-        <div class="game-card"><div class="game-thumb" style="height:100px; display:flex; align-items:center; justify-content:center; color:#888;">Cricket</div><div class="rtp-strip">RTP 97.51%</div></div>
-    </div>
-
-    <div class="section-title"><span><i class="fas fa-trophy" style="color:gold"></i> Winning Information</span></div>
-    <div class="winning-box">
-        <div class="ticker-list" id="ticker">
-            <div class="ticker-item"><div class="user-meta"><div class="avatar"></div>Mem***A1<br><small>Wingo</small></div><div class="win-amt">₹490.00</div></div>
-            <div class="ticker-item"><div class="user-meta"><div class="avatar"></div>Mem***X9<br><small>Aviator</small></div><div class="win-amt">₹1,250.00</div></div>
-            <div class="ticker-item"><div class="user-meta"><div class="avatar"></div>Mem***Q4<br><small>Slots</small></div><div class="win-amt">₹88.00</div></div>
-            <div class="ticker-item"><div class="user-meta"><div class="avatar"></div>Mem***P22<br><small>Cricket</small></div><div class="win-amt">₹3,400.00</div></div>
+    <div class="input-group">
+        <div style="font-weight:bold; margin-bottom:10px;">Password</div>
+        <div class="input-wrapper">
+            <input type="password" name="password" id="pass" placeholder="Password" required>
         </div>
     </div>
-
-    <div class="section-title"><span><i class="fas fa-chart-line" style="color:green"></i> Earnings Chart</span></div>
-    <div class="earnings-list">
-        <div class="rank-row"><span>1. Mem***CZA</span><span style="color:#ff5722">₹25,676,000.00</span></div>
-        <div class="rank-row"><span>2. Mem***WKL</span><span style="color:#ff5722">₹3,180,836.00</span></div>
-        <div class="rank-row"><span>3. Mem***VFT</span><span style="color:#ff5722">₹2,869,440.00</span></div>
-    </div>
-
-    <div class="nav-bar">
-        <a href="#" class="nav-link active"><i class="fas fa-home"></i>Home</a>
-        <a href="#" class="nav-link"><i class="fas fa-gift"></i>Activity</a>
-        <div style="width:65px; position:relative;"><div class="fab-btn"><i class="fas fa-plus-circle" style="font-size:48px; color:var(--main-yellow)"></i></div></div>
-        <a href="#" class="nav-link"><i class="fas fa-bullhorn"></i>Promotion</a>
-        <a href="#" class="nav-link"><i class="fas fa-user-circle"></i>Account</a>
-    </div>
-
-    <script>
-        // Automatic Slider Logic
-        let slideIndex = 0;
-        const slider = document.getElementById('slider');
-        setInterval(() => {
-            slideIndex = (slideIndex + 1) % 3;
-            slider.style.transform = `translateX(-${slideIndex * 33.33}%)`;
-        }, 3000);
-
-        // Winning Ticker Logic
-        const ticker = document.getElementById('ticker');
-        let tickerPos = 0;
-        setInterval(() => {
-            tickerPos -= 65;
-            if (tickerPos < -195) tickerPos = 0;
-            ticker.style.top = tickerPos + 'px';
-        }, 2500);
-    </script>
-</body>
-</html>
+    <button type="submit" class="btn-login">Log in</button>
+</form>
