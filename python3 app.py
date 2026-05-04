@@ -62,24 +62,21 @@ async def create_welcome_image(user_id, user_photo_id):
     img_io.seek(0)
     return img_io
 
-# --- TIGHT SECURITY SYSTEM ---
 @app.on_message(filters.command("start") & filters.private)
 async def start_handler(client, message):
     user_photo = message.from_user.photo.big_file_id if message.from_user.photo else None
     photo = await create_welcome_image(message.from_user.id, user_photo)
     await message.reply_photo(photo=photo, caption=START_TEXT)
 
-# Anti-Report: Baar-baar report maarne waalo ko block karna
 @app.on_message(filters.group & (filters.regex("(?i)report") | filters.regex("(?i)copyright")))
 async def anti_report_shield(client, message):
     try:
-        # MongoDB mein report ka record save karna
         reports_col.insert_one({
             "user_id": message.from_user.id,
             "chat_id": message.chat.id,
             "time": datetime.now()
         })
-        await message.delete() # Message delete karke channel secure karna
+        await message.delete()
     except:
         pass
 
