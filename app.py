@@ -10,6 +10,7 @@ client = MongoClient(MONGO_URI)
 db = client['in999_database']
 users_collection = db['users']
 
+# Is route ko add karein taaki "Not Found" khatam ho jaye
 @app.route('/')
 def home():
     return render_template('register.html')
@@ -19,6 +20,7 @@ def register():
     data = request.json
     phone = data.get('phone')
     password = data.get('password')
+    invite_code = data.get('invite_code')
     
     if users_collection.find_one({"phone": phone}):
         return jsonify({"message": "User already exists!"}), 400
@@ -26,6 +28,7 @@ def register():
     users_collection.insert_one({
         "phone": phone, 
         "password": password, 
+        "invite_code": invite_code,
         "balance": 0
     })
     return jsonify({"message": "Success! Account Created."}), 201
